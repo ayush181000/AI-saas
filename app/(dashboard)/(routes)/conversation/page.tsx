@@ -120,7 +120,7 @@ const ConversationPage = () => {
                 className='col-span-12 lg:col-span-2 w-full'
                 disabled={isLoading}
               >
-                Generate (as API is paid, this is just a demo)
+                Generate
               </Button>
             </form>
           </Form>
