@@ -7,7 +7,6 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Music } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { ChatCompletionRequestMessage } from 'openai';
 
 import Heading from '@/components/heading';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
@@ -18,18 +17,13 @@ import Loader from '@/components/loader';
 
 import { formSchema } from './constants';
 
-const testingMessages: ChatCompletionRequestMessage[] = [
-  { role: 'user', content: 'What is the radius of the sun' },
+const testingMusic = [
   {
-    role: 'assistant',
-    content:
-      'The radius of the Sun is approximately 696,340 kilometers (about 432,687 miles).',
-  },
-  { role: 'user', content: 'How much hot is sun' },
-  {
-    role: 'assistant',
-    content:
-      "The Sun is incredibly hot. Its core temperature is estimated to be around 15 million degrees Celsius (27 million degrees Fahrenheit). The temperature at the surface of the Sun, known as the photosphere, is relatively cooler at about 5,500 degrees Celsius (9,932 degrees Fahrenheit). Despite the lower temperature at the surface, it's still incredibly hot compared to anything we experience here on Earth. The Sun's intense heat is what enables it to generate the energy that sustains life on our planet and drives the various processes in our solar system.",
+    // prompt :"Piano solo"
+    audio:
+      'https://replicate.delivery/pbxt/DGeTebCHD7q8LkTOtVMSHzQ3FVMVvhOJIJU6KfdToyg8pfNFB/gen_sound.wav',
+    spectrogram:
+      'https://replicate.delivery/pbxt/Vp3mHqGCcX7QO194fHvj0Z3Y98QT1kwHMDxX4jKMzKzf0fmiA/spectrogram.jpg',
   },
 ];
 
@@ -129,7 +123,6 @@ const MusicPage = () => {
               <source src={music} />
             </audio>
           )}
-          <div>Music will be generated here </div>
         </div>
       </div>
     </div>

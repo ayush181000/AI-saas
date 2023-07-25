@@ -46,13 +46,13 @@ const ImagePage = () => {
     setImages([]);
 
     try {
-      // const response = await axios.post('/api/image', values);
-      // const urls = response.data.map((image: { url: string }) => image.url);
-      // setImages(urls);
-      // form.reset();
+      const response = await axios.post('/api/image', values);
+      const urls = response.data.map((image: { url: string }) => image.url);
+      setImages(urls);
+      form.reset();
     } catch (error: any) {
       //TODO: Open Pro Modal
-      console.log('Error ------> ', error.message);
+      console.log('Error ------> ', error);
       // setMessages(testingMessages);
     } finally {
       router.refresh();

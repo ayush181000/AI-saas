@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { Music } from 'lucide-react';
+import { Video } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ChatCompletionRequestMessage } from 'openai';
 
@@ -18,24 +18,14 @@ import Loader from '@/components/loader';
 
 import { formSchema } from './constants';
 
-const testingMessages: ChatCompletionRequestMessage[] = [
-  { role: 'user', content: 'What is the radius of the sun' },
-  {
-    role: 'assistant',
-    content:
-      'The radius of the Sun is approximately 696,340 kilometers (about 432,687 miles).',
-  },
-  { role: 'user', content: 'How much hot is sun' },
-  {
-    role: 'assistant',
-    content:
-      "The Sun is incredibly hot. Its core temperature is estimated to be around 15 million degrees Celsius (27 million degrees Fahrenheit). The temperature at the surface of the Sun, known as the photosphere, is relatively cooler at about 5,500 degrees Celsius (9,932 degrees Fahrenheit). Despite the lower temperature at the surface, it's still incredibly hot compared to anything we experience here on Earth. The Sun's intense heat is what enables it to generate the energy that sustains life on our planet and drives the various processes in our solar system.",
-  },
+const testingVideo = [
+  // prompt:Joker from batman dancing on batman grave
+  'https://replicate.delivery/pbxt/2DyJC6tRNSIaDxlB9OYekt4rsVDnI8rWhRO0PHZnz6cV9vpIA/output-0.mp4',
 ];
 
-const MusicPage = () => {
+const VideoPage = () => {
   const router = useRouter();
-  const [music, setMusic] = useState<string>();
+  const [video, setVideo] = useState<string>();
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,11 +40,11 @@ const MusicPage = () => {
     console.log(values);
 
     try {
-      setMusic(undefined);
+      setVideo(undefined);
 
-      const response = await axios.post('/api/music', values);
+      const response = await axios.post('/api/video', values);
 
-      setMusic(response.data.audio);
+      setVideo(response.data[0]);
       form.reset();
     } catch (error: any) {
       //TODO: Open Pro Modal
@@ -68,11 +58,11 @@ const MusicPage = () => {
   return (
     <div>
       <Heading
-        title='Music Generation'
-        description='Turn your prompt into music'
-        icon={Music}
-        iconColor='text-emerald-500'
-        bgColor='bg-emerald-500/10'
+        title='Video Generation'
+        description='Turn your prompt into a video'
+        icon={Video}
+        iconColor='text-orange-700'
+        bgColor='bg-orange-700/10'
       />
       <div className='px-4 lg:px-8'>
         <div>
@@ -100,7 +90,7 @@ const MusicPage = () => {
                       <Input
                         className='border-0 outline-none focus-visible:ring-0 focus-visible:ring-transparent'
                         disabled={isLoading}
-                        placeholder='Piano solo'
+                        placeholder='Clown fish swimming around a coral reef'
                         {...field}
                       />
                     </FormControl>
@@ -122,18 +112,20 @@ const MusicPage = () => {
               <Loader />
             </div>
           )}
-          {!music && !isLoading && <Empty label='No music generated' />}
-          {/* Music Content */}
-          {music && (
-            <audio controls className='w-full mt-8'>
-              <source src={music} />
-            </audio>
+          {!video && !isLoading && <Empty label='No video generated' />}
+          {/* video Content */}
+          {video && (
+            <video
+              controls
+              className='w-full aspect-video mt-8 rounded-lg border bg-black'
+            >
+              <source src={video} />
+            </video>
           )}
-          <div>Music will be generated here </div>
         </div>
       </div>
     </div>
   );
 };
 
-export default MusicPage;
+export default VideoPage;
