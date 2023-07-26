@@ -22,6 +22,7 @@ import { cn } from '@/lib/utils';
 import UserAvatar from '@/components/user-avatar';
 import BotAvatar from '@/components/bot-avatar';
 import DemoAlert from '@/components/demo-alert';
+import { useProModal } from '@/hooks/use-pro-modal';
 
 const testingMessages: ChatCompletionRequestMessage[] = [
   {
@@ -46,6 +47,7 @@ const testingMessages: ChatCompletionRequestMessage[] = [
 
 const CodePage = () => {
   const router = useRouter();
+  const proModal = useProModal();
   const [demo, setDemo] = useState<boolean>(false);
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
 
@@ -73,12 +75,14 @@ const CodePage = () => {
 
       setMessages((current) => [...current, userMessage, response.data]);
     } catch (error: any) {
-      //TODO: Open Pro Modal
-      console.log('Error ------> ', error.message);
-
+      if (error?.response?.status === 403) {
+        proModal.onOpen();
+      }
       // Setting fre fetched results
-      setDemo(true);
-      setMessages(testingMessages);
+      else {
+        setDemo(true);
+        setMessages(testingMessages);
+      }
     } finally {
       router.refresh();
     }

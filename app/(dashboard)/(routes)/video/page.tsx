@@ -18,6 +18,7 @@ import Loader from '@/components/loader';
 
 import { formSchema } from './constants';
 import DemoAlert from '@/components/demo-alert';
+import { useProModal } from '@/hooks/use-pro-modal';
 
 // prompt:Joker from batman dancing on batman grave
 const testingVideo =
@@ -25,6 +26,7 @@ const testingVideo =
 
 const VideoPage = () => {
   const router = useRouter();
+  const proModal = useProModal();
   const [video, setVideo] = useState<string>();
   const [demo, setDemo] = useState<boolean>(false);
 
@@ -48,11 +50,13 @@ const VideoPage = () => {
       setVideo(response.data[0]);
       form.reset();
     } catch (error: any) {
-      //TODO: Open Pro Modal
-      console.log('Error ------> ', error.message);
-
-      setDemo(true);
-      setVideo(testingVideo);
+      if (error?.response?.status === 403) {
+        proModal.onOpen();
+      } else {
+        // setting pre fetched values
+        setDemo(true);
+        setVideo(testingVideo);
+      }
     } finally {
       router.refresh();
     }

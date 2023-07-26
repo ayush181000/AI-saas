@@ -26,6 +26,7 @@ import { amountOptions, formSchema, resolutionOptions } from './constants';
 import { Card, CardFooter } from '@/components/ui/card';
 import Image from 'next/image';
 import DemoAlert from '@/components/demo-alert';
+import { useProModal } from '@/hooks/use-pro-modal';
 
 // prompt: 'spider man 2099 8k wallpaper';
 const testingImages: string[] = [
@@ -34,6 +35,7 @@ const testingImages: string[] = [
 
 const ImagePage = () => {
   const router = useRouter();
+  const proModal = useProModal();
   const [images, setImages] = useState<string[]>([]);
   const [demo, setDemo] = useState<boolean>(false);
 
@@ -58,11 +60,13 @@ const ImagePage = () => {
       setImages(urls);
       form.reset();
     } catch (error: any) {
-      //TODO: Open Pro Modal
-      console.log('Error ------> ', error);
-
-      setDemo(true);
-      setImages(testingImages);
+      if (error?.response?.status === 403) {
+        proModal.onOpen();
+      } else {
+        // setting pre fetched results
+        setDemo(true);
+        setImages(testingImages);
+      }
     } finally {
       router.refresh();
     }

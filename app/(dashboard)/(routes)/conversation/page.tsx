@@ -21,6 +21,7 @@ import { cn } from '@/lib/utils';
 import UserAvatar from '@/components/user-avatar';
 import BotAvatar from '@/components/bot-avatar';
 import DemoAlert from '@/components/demo-alert';
+import { useProModal } from '@/hooks/use-pro-modal';
 
 const testingMessages: ChatCompletionRequestMessage[] = [
   { role: 'user', content: 'What is the radius of the sun' },
@@ -39,6 +40,7 @@ const testingMessages: ChatCompletionRequestMessage[] = [
 
 const ConversationPage = () => {
   const router = useRouter();
+  const proModal = useProModal();
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
   const [demo, setDemo] = useState<boolean>(false);
 
@@ -66,12 +68,13 @@ const ConversationPage = () => {
 
       setMessages((current) => [...current, userMessage, response.data]);
     } catch (error: any) {
-      //TODO: Open Pro Modal
-      console.log('Error ------> ', error.message);
-
-      // Setting fre fetched results
-      setDemo(true);
-      setMessages(testingMessages);
+      if (error?.response?.status === 403) {
+        proModal.onOpen();
+      } else {
+        // Setting fre fetched results
+        setDemo(true);
+        setMessages(testingMessages);
+      }
     } finally {
       router.refresh();
     }

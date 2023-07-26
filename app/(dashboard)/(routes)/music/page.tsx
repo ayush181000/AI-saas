@@ -17,6 +17,7 @@ import Loader from '@/components/loader';
 
 import { formSchema } from './constants';
 import DemoAlert from '@/components/demo-alert';
+import { useProModal } from '@/hooks/use-pro-modal';
 
 // prompt :"Piano solo"
 const testingMusic = {
@@ -28,6 +29,7 @@ const testingMusic = {
 
 const MusicPage = () => {
   const router = useRouter();
+  const proModal = useProModal();
   const [music, setMusic] = useState<string>();
   const [demo, setDemo] = useState<boolean>(false);
 
@@ -51,11 +53,13 @@ const MusicPage = () => {
       setMusic(response.data.audio);
       form.reset();
     } catch (error: any) {
-      //TODO: Open Pro Modal
-      console.log('Error ------> ', error.message);
-
-      setDemo(true);
-      setMusic(testingMusic.audio);
+      if (error?.response?.status === 403) {
+        proModal.onOpen();
+      } else {
+        // setting pre fetched values
+        setDemo(true);
+        setMusic(testingMusic.audio);
+      }
     } finally {
       router.refresh();
     }
