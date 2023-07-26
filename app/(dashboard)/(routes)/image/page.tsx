@@ -25,10 +25,16 @@ import Loader from '@/components/loader';
 import { amountOptions, formSchema, resolutionOptions } from './constants';
 import { Card, CardFooter } from '@/components/ui/card';
 import Image from 'next/image';
+import DemoAlert from '@/components/demo-alert';
+
+const testingImages: string[] = [
+  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBjMFianvLprqcE5ZGe47uQFjpGoyHXz5ZJF0bNvwZng&s',
+];
 
 const ImagePage = () => {
   const router = useRouter();
   const [images, setImages] = useState<string[]>([]);
+  const [demo, setDemo] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,7 +59,9 @@ const ImagePage = () => {
     } catch (error: any) {
       //TODO: Open Pro Modal
       console.log('Error ------> ', error);
-      // setMessages(testingMessages);
+
+      setDemo(true);
+      setImages(testingImages);
     } finally {
       router.refresh();
     }
@@ -68,6 +76,7 @@ const ImagePage = () => {
         iconColor='text-pink-700'
         bgColor='bg-pink-700/10'
       />
+      {demo && <DemoAlert />}
       <div className='px-4 lg:px-8'>
         <div>
           <Form {...form}>
@@ -176,7 +185,7 @@ const ImagePage = () => {
             {images.map((src) => (
               <Card key={src} className='rounded-lg overflow-hidden'>
                 <div className='relative aspect-square'>
-                  <Image alt='Image' src={src} />
+                  <Image fill alt='Image' src={src} />
                 </div>
                 <CardFooter className='p-2'>
                   <Button
@@ -189,7 +198,6 @@ const ImagePage = () => {
                 </CardFooter>
               </Card>
             ))}
-            Images will be rendered here
           </div>
         </div>
       </div>

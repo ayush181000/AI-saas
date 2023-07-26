@@ -20,6 +20,7 @@ import { formSchema } from './constants';
 import { cn } from '@/lib/utils';
 import UserAvatar from '@/components/user-avatar';
 import BotAvatar from '@/components/bot-avatar';
+import DemoAlert from '@/components/demo-alert';
 
 const testingMessages: ChatCompletionRequestMessage[] = [
   { role: 'user', content: 'What is the radius of the sun' },
@@ -39,6 +40,7 @@ const testingMessages: ChatCompletionRequestMessage[] = [
 const ConversationPage = () => {
   const router = useRouter();
   const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
+  const [demo, setDemo] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,8 +52,6 @@ const ConversationPage = () => {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-
     try {
       const userMessage: ChatCompletionRequestMessage = {
         role: 'user',
@@ -68,7 +68,10 @@ const ConversationPage = () => {
     } catch (error: any) {
       //TODO: Open Pro Modal
       console.log('Error ------> ', error.message);
-      // setMessages(testingMessages);
+
+      // Setting fre fetched results
+      setDemo(true);
+      setMessages(testingMessages);
     } finally {
       router.refresh();
     }
@@ -83,6 +86,7 @@ const ConversationPage = () => {
         iconColor='text-violet-500'
         bgColor='bg-violet-500/10'
       />
+      {demo && <DemoAlert />}
       <div className='px-4 lg:px-8'>
         <div>
           <Form {...form}>

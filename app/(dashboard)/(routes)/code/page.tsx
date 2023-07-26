@@ -21,6 +21,7 @@ import { formSchema } from './constants';
 import { cn } from '@/lib/utils';
 import UserAvatar from '@/components/user-avatar';
 import BotAvatar from '@/components/bot-avatar';
+import DemoAlert from '@/components/demo-alert';
 
 const testingMessages: ChatCompletionRequestMessage[] = [
   {
@@ -61,8 +62,8 @@ const testingMessages: ChatCompletionRequestMessage[] = [
 
 const CodePage = () => {
   const router = useRouter();
-  const [messages, setMessages] =
-    useState<ChatCompletionRequestMessage[]>(testingMessages);
+  const [demo, setDemo] = useState<boolean>(false);
+  const [messages, setMessages] = useState<ChatCompletionRequestMessage[]>([]);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -74,8 +75,6 @@ const CodePage = () => {
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
-
     try {
       const userMessage: ChatCompletionRequestMessage = {
         role: 'user',
@@ -92,7 +91,10 @@ const CodePage = () => {
     } catch (error: any) {
       //TODO: Open Pro Modal
       console.log('Error ------> ', error.message);
-      // setMessages(testingMessages);
+
+      // Setting fre fetched results
+      setDemo(true);
+      setMessages(testingMessages);
     } finally {
       router.refresh();
     }
@@ -107,22 +109,22 @@ const CodePage = () => {
         iconColor='text-green-700'
         bgColor='bg-green-700/10'
       />
+      {demo && <DemoAlert />}
       <div className='px-4 lg:px-8'>
         <div>
           <Form {...form}>
             <form
               onSubmit={form.handleSubmit(onSubmit)}
-              className='
-            rounded-lg 
-            border
-            w-full
-            p-4
-            px-3
-            md:px-6
-            focus-within:shadow-sm
-            grid
-            grid-cols-12
-            gap-2
+              className='rounded-lg 
+              border
+              w-full
+              p-4
+              px-3
+              md:px-6
+              focus-within:shadow-sm
+              grid
+              grid-cols-12
+              gap-2
             '
             >
               <FormField
@@ -144,7 +146,7 @@ const CodePage = () => {
                 className='col-span-12 lg:col-span-2 w-full'
                 disabled={isLoading}
               >
-                Generate (as API is paid, this is just a demo)
+                Generate
               </Button>
             </form>
           </Form>

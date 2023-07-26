@@ -17,15 +17,16 @@ import { Empty } from '@/components/empty';
 import Loader from '@/components/loader';
 
 import { formSchema } from './constants';
+import DemoAlert from '@/components/demo-alert';
 
-const testingVideo = [
-  // prompt:Joker from batman dancing on batman grave
-  'https://replicate.delivery/pbxt/2DyJC6tRNSIaDxlB9OYekt4rsVDnI8rWhRO0PHZnz6cV9vpIA/output-0.mp4',
-];
+// prompt:Joker from batman dancing on batman grave
+const testingVideo =
+  'https://replicate.delivery/pbxt/2DyJC6tRNSIaDxlB9OYekt4rsVDnI8rWhRO0PHZnz6cV9vpIA/output-0.mp4';
 
 const VideoPage = () => {
   const router = useRouter();
   const [video, setVideo] = useState<string>();
+  const [demo, setDemo] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -49,7 +50,9 @@ const VideoPage = () => {
     } catch (error: any) {
       //TODO: Open Pro Modal
       console.log('Error ------> ', error.message);
-      // setMessages(testingMessages);
+
+      setDemo(true);
+      setVideo(testingVideo);
     } finally {
       router.refresh();
     }
@@ -64,6 +67,7 @@ const VideoPage = () => {
         iconColor='text-orange-700'
         bgColor='bg-orange-700/10'
       />
+      {demo && <DemoAlert />}
       <div className='px-4 lg:px-8'>
         <div>
           <Form {...form}>

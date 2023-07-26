@@ -16,20 +16,20 @@ import { Empty } from '@/components/empty';
 import Loader from '@/components/loader';
 
 import { formSchema } from './constants';
+import DemoAlert from '@/components/demo-alert';
 
-const testingMusic = [
-  {
-    // prompt :"Piano solo"
-    audio:
-      'https://replicate.delivery/pbxt/DGeTebCHD7q8LkTOtVMSHzQ3FVMVvhOJIJU6KfdToyg8pfNFB/gen_sound.wav',
-    spectrogram:
-      'https://replicate.delivery/pbxt/Vp3mHqGCcX7QO194fHvj0Z3Y98QT1kwHMDxX4jKMzKzf0fmiA/spectrogram.jpg',
-  },
-];
+// prompt :"Piano solo"
+const testingMusic = {
+  audio:
+    'https://replicate.delivery/pbxt/DGeTebCHD7q8LkTOtVMSHzQ3FVMVvhOJIJU6KfdToyg8pfNFB/gen_sound.wav',
+  spectrogram:
+    'https://replicate.delivery/pbxt/Vp3mHqGCcX7QO194fHvj0Z3Y98QT1kwHMDxX4jKMzKzf0fmiA/spectrogram.jpg',
+};
 
 const MusicPage = () => {
   const router = useRouter();
   const [music, setMusic] = useState<string>();
+  const [demo, setDemo] = useState<boolean>(false);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -53,7 +53,9 @@ const MusicPage = () => {
     } catch (error: any) {
       //TODO: Open Pro Modal
       console.log('Error ------> ', error.message);
-      // setMessages(testingMessages);
+
+      setDemo(true);
+      setMusic(testingMusic.audio);
     } finally {
       router.refresh();
     }
@@ -68,6 +70,7 @@ const MusicPage = () => {
         iconColor='text-emerald-500'
         bgColor='bg-emerald-500/10'
       />
+      {demo && <DemoAlert />}
       <div className='px-4 lg:px-8'>
         <div>
           <Form {...form}>
