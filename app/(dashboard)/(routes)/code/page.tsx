@@ -30,33 +30,17 @@ const testingMessages: ChatCompletionRequestMessage[] = [
   },
   {
     role: 'assistant',
-    content: `Sure! Below is an example of a simple toggle button using React hooks:
-    
-    \`\`\`
-    import React, { useState } from 'react';
-
-    const ToggleButton = () => {
-    const [isToggled, setToggle] = useState(false);
-
-    const handleToggle = () => {
-      setToggle((prevState) => !prevState);
-    };
-
-    return (
-      <button onClick={handleToggle}>
-        {isToggled ? 'ON' : 'OFF'}
-    </button>
-    );
-  };
-
-  export default ToggleButton;
-
-\`\`\`
-
-    In this example, we use the useState hook to manage the state of the toggle button. The isToggled variable holds the current state (either true for 'ON' or false for 'OFF'), and the setToggle function is used to update the state when the button is clicked.
-    
-    When the button is clicked, the handleToggle function is called, which uses the setToggle function to toggle the state between true and false. The button text will change accordingly based on the current state, showing either 'ON' or 'OFF'.
-    `,
+    content:
+      "Here is an example of a simple toggle button using ReactJS:\n\n```jsx\nimport React, { useState } from 'react';\n\nconst ToggleButton = () => {\n  const [isToggled, setIsToggled] = useState(false);\n\n  const handleToggle = () => {\n    setIsToggled(!isToggled);\n  };\n\n  return (\n    <button onClick={handleToggle}>\n      {isToggled ? 'ON' : 'OFF'}\n    </button>\n  );\n};\n\nexport default ToggleButton;\n```\n\nIn this example, we are using the `useState` hook to manage the state of the toggle button. The initial value of `isToggled` is set to `false`. The `handleToggle` function is responsible for flipping the value of `isToggled` when the button is clicked.\n\nThe button's text is dynamically rendered based on the value of `isToggled`. If `isToggled` is `true`, the text will be 'ON', otherwise it will be 'OFF'.\n\nTo use this `ToggleButton` component in your app, you can simply import and include it in your desired location:\n\n```jsx\nimport React from 'react';\nimport ToggleButton from './ToggleButton';\n\nconst App = () => {\n  return (\n    <div>\n      <h1>Toggle Button Example</h1>\n      <ToggleButton />\n    </div>\n  );\n};\n\nexport default App;\n```",
+  },
+  {
+    role: 'user',
+    content: 'Add css to it to make it prettier',
+  },
+  {
+    role: 'assistant',
+    content:
+      "Sure! Here's an updated version of the `ToggleButton` component with some basic CSS styles to make it prettier:\n\n```jsx\nimport React, { useState } from 'react';\nimport './ToggleButton.css';\n\nconst ToggleButton = () => {\n  const [isToggled, setIsToggled] = useState(false);\n\n  const handleToggle = () => {\n    setIsToggled(!isToggled);\n  };\n\n  return (\n    <button className={isToggled ? 'toggle-button on' : 'toggle-button off'} onClick={handleToggle}>\n      {isToggled ? 'ON' : 'OFF'}\n    </button>\n  );\n};\n\nexport default ToggleButton;\n```\n\nIn this example, I have added a CSS file named `ToggleButton.css` in the same directory as the `ToggleButton` component. Here's an example of what the CSS file could look like:\n\n```css\n.toggle-button {\n  padding: 10px;\n  border: none;\n  border-radius: 4px;\n  font-size: 16px;\n  cursor: pointer;\n}\n\n.toggle-button.on {\n  background-color: green;\n  color: white;\n}\n\n.toggle-button.off {\n  background-color: red;\n  color: white;\n}\n```\n\nWith these styles, the button will have some padding, rounded corners, and a solid background color that changes based on the state of `isToggled`. The text color will be white for better visibility.\n\nRemember to import the CSS file in your main app component or index file using `import './ToggleButton.css';`.\n\nHope that helps!",
   },
 ];
 

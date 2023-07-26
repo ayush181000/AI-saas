@@ -27,8 +27,9 @@ import { Card, CardFooter } from '@/components/ui/card';
 import Image from 'next/image';
 import DemoAlert from '@/components/demo-alert';
 
+// prompt: 'spider man 2099 8k wallpaper';
 const testingImages: string[] = [
-  'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTBjMFianvLprqcE5ZGe47uQFjpGoyHXz5ZJF0bNvwZng&s',
+  'https://oaidalleapiprodscus.blob.core.windows.net/private/org-ppsBDKjkfJ7qNLL822Z9uiQj/user-fVWP0tb2YELimSabCqCP7oEM/img-DlpQaHnPBrTlzY9SthQs3YtP.png?st=2023-07-26T03%3A07%3A04Z&se=2023-07-26T05%3A07%3A04Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-07-25T14%3A49%3A53Z&ske=2023-07-26T14%3A49%3A53Z&sks=b&skv=2021-08-06&sig=FGyr5769I50QDtTJtxHp0NEyw6a6ZsEmi8GbAdPnvYU%3D',
 ];
 
 const ImagePage = () => {
