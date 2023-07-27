@@ -14,14 +14,14 @@ import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Empty } from '@/components/empty';
-import Loader from '@/components/loader';
-
-import { formSchema } from './constants';
-import { cn } from '@/lib/utils';
 import UserAvatar from '@/components/user-avatar';
 import BotAvatar from '@/components/bot-avatar';
 import DemoAlert from '@/components/demo-alert';
+import Loader from '@/components/loader';
+import { cn } from '@/lib/utils';
+
 import { useProModal } from '@/hooks/use-pro-modal';
+import { formSchema } from './constants';
 
 const testingMessages: ChatCompletionRequestMessage[] = [
   { role: 'user', content: 'What is the radius of the sun' },
