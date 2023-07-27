@@ -9,6 +9,7 @@ import { Code } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ChatCompletionRequestMessage } from 'openai';
 import ReactMarkdown from 'react-markdown';
+import { toast } from 'react-hot-toast';
 
 import Heading from '@/components/heading';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
@@ -16,12 +17,12 @@ import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Empty } from '@/components/empty';
 import Loader from '@/components/loader';
-
-import { formSchema } from './constants';
-import { cn } from '@/lib/utils';
 import UserAvatar from '@/components/user-avatar';
 import BotAvatar from '@/components/bot-avatar';
 import DemoAlert from '@/components/demo-alert';
+
+import { formSchema } from './constants';
+import { cn } from '@/lib/utils';
 import { useProModal } from '@/hooks/use-pro-modal';
 
 const testingMessages: ChatCompletionRequestMessage[] = [
@@ -82,6 +83,7 @@ const CodePage = () => {
       else {
         setDemo(true);
         setMessages(testingMessages);
+        toast.error('Something went wrong');
       }
     } finally {
       router.refresh();

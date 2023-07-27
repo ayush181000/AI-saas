@@ -18,6 +18,7 @@ import Loader from '@/components/loader';
 import { formSchema } from './constants';
 import DemoAlert from '@/components/demo-alert';
 import { useProModal } from '@/hooks/use-pro-modal';
+import { toast } from 'react-hot-toast';
 
 // prompt :"Piano solo"
 const testingMusic = {
@@ -59,6 +60,7 @@ const MusicPage = () => {
         // setting pre fetched values
         setDemo(true);
         setMusic(testingMusic.audio);
+        toast.error('Something went wrong');
       }
     } finally {
       router.refresh();

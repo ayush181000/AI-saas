@@ -8,6 +8,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { MessageSquare } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { ChatCompletionRequestMessage } from 'openai';
+import { toast } from 'react-hot-toast';
 
 import Heading from '@/components/heading';
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
@@ -18,8 +19,8 @@ import UserAvatar from '@/components/user-avatar';
 import BotAvatar from '@/components/bot-avatar';
 import DemoAlert from '@/components/demo-alert';
 import Loader from '@/components/loader';
-import { cn } from '@/lib/utils';
 
+import { cn } from '@/lib/utils';
 import { useProModal } from '@/hooks/use-pro-modal';
 import { formSchema } from './constants';
 
@@ -72,6 +73,7 @@ const ConversationPage = () => {
         proModal.onOpen();
       } else {
         // Setting fre fetched results
+        toast.error('Something went wrong');
         setDemo(true);
         setMessages(testingMessages);
       }

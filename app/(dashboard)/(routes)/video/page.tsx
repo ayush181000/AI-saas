@@ -19,6 +19,7 @@ import Loader from '@/components/loader';
 import { formSchema } from './constants';
 import DemoAlert from '@/components/demo-alert';
 import { useProModal } from '@/hooks/use-pro-modal';
+import { toast } from 'react-hot-toast';
 
 // prompt:Joker from batman dancing on batman grave
 const testingVideo =
@@ -56,6 +57,7 @@ const VideoPage = () => {
         // setting pre fetched values
         setDemo(true);
         setVideo(testingVideo);
+        toast.error('Something went wrong');
       }
     } finally {
       router.refresh();

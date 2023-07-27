@@ -7,6 +7,8 @@ import * as z from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { Download, ImageIcon } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
+import { toast } from 'react-hot-toast';
 
 import { Form, FormControl, FormField, FormItem } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
@@ -21,11 +23,10 @@ import {
 import Heading from '@/components/heading';
 import { Empty } from '@/components/empty';
 import Loader from '@/components/loader';
+import { Card, CardFooter } from '@/components/ui/card';
+import DemoAlert from '@/components/demo-alert';
 
 import { amountOptions, formSchema, resolutionOptions } from './constants';
-import { Card, CardFooter } from '@/components/ui/card';
-import Image from 'next/image';
-import DemoAlert from '@/components/demo-alert';
 import { useProModal } from '@/hooks/use-pro-modal';
 
 // prompt: 'spider man 2099 8k wallpaper';
@@ -66,6 +67,7 @@ const ImagePage = () => {
         // setting pre fetched results
         setDemo(true);
         setImages(testingImages);
+        toast.error('Something went wrong');
       }
     } finally {
       router.refresh();
