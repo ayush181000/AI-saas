@@ -7,6 +7,7 @@ Tools Used in the Project
 - OpenAI API (for conversation, image generation and code generation)
 - Replicate API (for music generation and video generation)
 - Plane Scale (for SQL)
+- Crisp (for customer chat support)
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
